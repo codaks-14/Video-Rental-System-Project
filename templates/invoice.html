@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Summary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #000;
+            font-size: 1.5rem;
+        }
+        h3 {
+            text-align: center;
+        }
+        h5 {
+            font-size: 1.2rem;
+        }
+        hr {
+            border: 1px solid #000;
+        }
+        .bill {
+            background-color: #fff;
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 50%;
+            border-radius: 15px;
+        }
+        .one {
+            
+        }
+        .two
+        {
+            font-weight: bold;
+            margin-bottom: 5%;
+            margin-top: 2%;
+            padding-top: 1%;
+        }
+        .three
+        {
+            margin-bottom: 0;
+        }
+        .heading
+        {
+            border-bottom: 1px solid #333;
+            border-top: 1px solid #333;
+            padding-top: 3px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .each
+        {
+            padding-top: 2px;
+            font-weight: none;
+        }
+        .tax
+        {
+            border-top: 1px solid #333;
+            padding-top: 3px;
+        }
+        .total
+        {
+            border-bottom: 1px solid #333;
+        }
+        .last
+        {
+            padding-top:4px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="bill">
+        <h1 class="two">Bill Summary</h1>
+        <h4 class="two">Invoice ID: {{invoice.invoice_id}}</h4>
+        <h4 class="two">{{invoice.invoice_date}}</h4>
+
+        <div class="one">
+          <table width="450">
+            <thead>
+                <tr>
+            <th align="left" class="heading">Movie</th>
+            <th class="heading">Type</th>
+            <th align="right" class ="heading">Price</th>
+            </tr>
+            </thead>
+
+            <tbody>
+          {% for order in orders %}
+          <tr>
+            <th align="left" class="each">{{order.movie.title}}</th>
+            <th class="each">
+                {% if order.isrented == 0 %}
+                    Buy
+                    {% else %}
+                    Rent
+                    {% endif %}
+            </th>
+            <th class="each" align = "right">
+              Rs.{% if order.isrented == 0 %}
+                  {{order.movie.buy_price}}
+                  {% else %}
+                  {{order.movie.rent_price}}
+                  {% endif %}
+            </th>
+        </tr>
+          {% endfor %}
+          
+          
+          <tr class="four">
+              <th align="left"class="tax">Total</th>
+                <th style="border-top:1px solid #333;"></th>
+              <th align="right"class="tax">Rs. {{with_out_tax}}</th>
+          </tr>
+          <tr class="four">
+            <th align="left" class="total">Tax (18%)</th>
+            <th style="border-bottom:1px solid #333;"></th>
+            <th align="right" class="total" >Rs. {{tax}}</th>
+        </tr>
+        </tbody>
+
+
+          <tr class="four">
+            <th align="left" class="last">Total price</th>
+            <th>
+            </th>
+            <th align="right" class="last">Rs. {{invoice.total_price}}</th>
+          </tr>
+
+        </div>
+    </div>
+</body>

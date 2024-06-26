@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block title %}
+Cart
+{% endblock title %}
+{% block body %}
+
+<style>
+    @media (min-width: 1025px) {
+        .h-custom {
+        height: 100vh !important;
+        }
+        }
+        
+        .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+        }
+        
+        .card-registration .select-arrow {
+        top: 13px;
+        }
+        
+        .bg-grey {
+        background-color: #eae8e8;
+        }
+        
+        @media (min-width: 992px) {
+        .card-registration-2 .bg-grey {
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        }
+        }
+        
+        @media (max-width: 991px) {
+        .card-registration-2 .bg-grey {
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+        }
+        }
+</style>
+
+<script>
+    function showAlert(id, flag) {
+        console.log(id, flag);
+        window.location.href = "/carttoggle/" + id + "/" + flag + "/";
+    }
+</script>
+
+<section class="h-100 align-items-center" style="background-color: black;">
+  {% if cart_items|length != 0 %}
+    <div class="container py-5 h-100" style="max-width: 1214px">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-13">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h2 class="font-weight-bold mb-0 text-black">Shopping Cart</h2>
+                      <h6 class="mb-0 text-muted">{{cart_items|length}} items</h6>
+                    </div>
+                    <hr class="my-2">
+                    
+                    {% for items in cart_items %}
+                    <div class="row d-flex justify-content-between align-items-center">
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <img
+                          src="{{items.movie.img_url}}"
+                          class="img-fluid rounded-3" alt="Cotton T-shirt" style="max-width: 130%; aspect-ratio: 2/3;">
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                          <h6 class="font-weight-bold mb-0">{{items.movie.title}}</h6>
+                        <h6 class="text-muted mb-0  ">Rent: ₹{{items.movie.rent_price}}</h6>
+                        <h6 class="text-muted">Buy: ₹{{items.movie.buy_price}}</h6>
+                      </div>
+
+                      <div class="col-md-3 col-lg-3 col-xl-2">
+                        
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          {% if items.isrented == 1 %}
+                            <label class="btn btn-outline-dark active">
+                              <input type="radio" name="options" id="rent" onclick="showAlert({{items.movie.id}}, 1)" checked>Rent
+                            </label>
+                            <label class="btn btn-outline-dark">
+                              <input type="radio" name="options" id="buy" onclick="showAlert({{items.movie.id}}, 0)"> Buy
+                            </label>
+                          {% else %}
+                            <label class="btn btn-outline-dark">
+                              <input type="radio" name="options" id="rent" onclick="showAlert({{items.movie.id}}, 1)">Rent
+                            </label>
+                            <label class="btn btn-outline-dark active">
+                              <input type="radio" name="options" id="buy" onclick="showAlert({{items.movie.id}}, 0)" checked> Buy
+                            </label>
+                          {% endif %}
+                          </div>
+                      </div>
+
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">
+                            ₹{% if items.isrented == 0 %}
+                            {{items.movie.buy_price}}
+                            {% else %}
+                            {{items.movie.rent_price}}
+                            {% endif %}
+                        </h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <a href="/remove_from_cart/{{items.movie.id}}/" class="text-muted"><i class="fas fa-times"></i></a>
+                      </div>
+                    </div>
+  
+                    <hr class="my-2">
+                    {% endfor %}
+
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Bill Summary</h3>
+
+                    <div class="d-flex justify-content-between mb-0">
+                      <h5 class="text-black font-weight-bold">Movie</h5>
+                      <h5 class = "font-weight-bold">Price</h5>
+                    </div>
+
+                    <hr class="my-2">
+
+                    {% for item in cart_items %}
+                    <div class="d-flex justify-content-between mb-1">
+                      <h5 class="text-black">{{item.movie.title}}</h5>
+                      <h5>
+                        ₹{% if item.isrented == 0 %}
+                            {{item.movie.buy_price}}
+                            {% else %}
+                            {{item.movie.rent_price}}
+                            {% endif %}
+                      </h5>
+                    </div>
+                    {% endfor %}
+
+                    <hr class="my-2">
+  
+                    <div class="d-flex justify-content-between mb-1">
+                      <h5 class="text-black font-weight-bold">Total</h5>
+                      <h5>₹{{total_price}}</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <h5 class="text-black font-weight-bold">Tax (18%)</h5>
+                      <h5>₹{{tax}}</h5>
+                    </div>
+  
+                    <hr class="my-2">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase font-weight-bold">Total price</h5>
+                      <h5>₹{{final_price}}</h5>
+                    </div>
+                    <a href="/payment">
+                    <button type="button" class="btn btn-dark btn-block btn-lg"
+                      data-mdb-ripple-color="dark">Place Order</button>
+                    </a>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <div>
+    <img src="/static/emptycart.png" style ="margin: 0;
+    width: 20%;
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    ">
+  </div>
+  {% endif %}
+
+{% endblock body %}

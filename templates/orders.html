@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}
+Orders
+{% endblock title %}
+
+{% block body %}
+<style>
+    .god{
+      background: linear-gradient(90deg, #141e30 0%, #243b55 100%);
+    }
+    a
+    {
+      color:red;
+    }
+      
+      .mask-custom {
+        background: rgba(255,255, 255, 1);
+        border-radius: 2em;
+        backdrop-filter: blur(25px);
+        border: 2px solid rgba(255, 255, 255, 0.05);
+        background-clip: padding-box;
+        box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+      }
+</style>
+
+<body class="god">
+<section class="vh-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-12">
+  
+          <div class="card mask-custom">
+            <div class="card-body p-4 text-black">
+  
+              <div class="text-center pt-1 pb-2">
+                <h2 class="my-4">Your Orders</h2>
+              </div>
+  
+              <table class="table text-black mb-0" >
+                <thead>
+                  <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Movie</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Invoice</th>
+                  </th>
+
+                </thead>
+                <div  style = " margin: 5px; border-radius: 10px;">
+                  {% comment %} {% for i in "loveaparna" %} {% endcomment %}
+                  {% for order in orders %}
+                </tr>
+                <tr class="fw-normal ">
+                  <th class="border-0 align-middle">
+                    <span class="ms-2 text-black">{{order.order_id}}</span>
+                  </th>
+                  <td class="border-0 align-middle">{{order.movie}}</td>
+                  <td class="border-0 align-middle">{{order.total_price}}</td>
+                  <td class="border-0 align-middle">{{order.order_date}}</td>
+                  <td class="border-0 align-middle">{{order.due_date}}</td>
+                  <td class="border-0 align-middle">
+                    {% if order.status == "Returned" %}
+                    <h6 class="mb-0"><span class="badge bg-success"> {{order.status}}</span></h6>
+                    {% elif order.status == "Not Returned" %}
+                    <h6 class="mb-0"><span class="badge py-1 px-2" style ="background-color: #e8630a"> {{order.status}}</span></h6>
+                    {% elif order.status == "Sold" %}
+                    <h6 class="mb-0"><span class="badge bg-primary"> Bought</span></h6>
+                    {% else %}
+                    <h6 class="mb-0"><span class="badge py-1 px-2" style ="background-color: #ff0022"> {{order.status}}</span></h6>
+                    {% endif %}
+                  </td>
+                  <td class="border-0 align-middle pl-4"><a href="/pdf/{{order.invoice_id}}" ><i class="fas fa-file-pdf" style="scale:1.2;"></i></a></td>
+                {% endfor %}
+            </div>
+              </table>
+  
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+<body>
+{% endblock body %}
+

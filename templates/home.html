@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+{% block title %}
+Home
+{% endblock title %}
+{% block body %}
+
+<div class="container pb-5">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2569">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="/movie/{{movie1.id}}">
+        <img style="padding: 30px 0px 0px 0px; max-height: 700px; height: 700px;"
+          src="{{movie1.backdrop_url}}" class="d-block w-100" alt="no image" onerror="this.src='/static/noposterl.jpg';">
+        </a>
+        <div class="bottom-left text-nowrap" style="position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size:400%;
+            color: white;
+            Font-family: 'Comic Sans MS';
+          ">{{movie1.title}}</div>
+      </div>
+      {% for i in carousels %}
+      <div class="carousel-item">
+        <a href="/movie/{{i.id}}">
+        <img style="padding: 30px 0px 0px 0px; height: 700px;"
+          src="{{i.backdrop_url}}"
+          class="d-block w-100" alt="no image" onerror="this.src='/static/noposterl.jpg';">
+        </a>
+        <div class="bottom-left text-nowrap" style="position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size:400%;
+            color: white;
+            Font-family: 'Comic Sans MS';
+          ">{{i.title}}</div>
+      </div>
+      {% endfor %}
+      
+      
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+<style>
+  .card-group,
+  .my {
+    padding: 60px;
+    padding-top: 10px;
+  }
+
+  #movieimage {
+    aspect-ratio: 2/3;
+    border-collapse: separate;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card-body {
+    height: auto;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 0.8rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .card {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 5px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 4%;
+  }
+
+  /* adding bold to movie-title */
+  .card-title {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  #god {
+    font-size: 1rem;
+  }
+</style>
+
+
+{% comment %} recommendations {% endcomment %}
+<h1 style="padding: 10px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Recommended For You</h1>
+<div id="carouselExampleCaptions0" class="carousel carousel-dark slide" data-bs-ride="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        {% for j in recommendations_range1 %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title"> {{j.title}} </h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for i in recommendations_range2 %}
+    <div class="carousel-item">
+      <div class="card-group">
+        {% for j in i %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title">{{j.title}}</h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  <div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions0" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions0" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+
+{% comment %} All shuffle Movies {% endcomment %}
+<h1 style="padding: 10px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Bestsellers</h1>
+<div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        {% for j in range1 %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title"> {{j.title}} </h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for i in range2 %}
+    <div class="carousel-item">
+      <div class="card-group">
+        {% for j in i %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title">{{j.title}}</h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  <div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+{% comment %} Polpular Movies {% endcomment %}
+<h1 style="padding: 10px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Popular Movies</h1>
+<div id="carouselExampleCaptions1" class="carousel carousel-dark slide" data-bs-ride="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        {% for j in popular_range1 %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title"> {{j.title}} </h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for i in popular_range2 %}
+    <div class="carousel-item">
+      <div class="card-group">
+        {% for j in i %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title">{{j.title}}</h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  <div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions1" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions1" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+
+{% comment %} Latest Arrivals {% endcomment %}
+<h1 style="padding: 10px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Latest Arrivals</h1>
+<div id="carouselExampleCaptions2" class="carousel carousel-dark slide" data-bs-ride="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        {% for j in latest_range1 %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title"> {{j.title}} </h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for i in latest_range2 %}
+    <div class="carousel-item">
+      <div class="card-group">
+        {% for j in i %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title">{{j.title}}</h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  <div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions2" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions2" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+
+{% comment %} Deals of the day Movies {% endcomment %}
+<h1 style="padding: 10px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Deals of the day</h1>
+<div id="carouselExampleCaptions3" class="carousel carousel-dark slide" data-bs-ride="false">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card-group">
+        {% for j in deals_range1 %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title"> {{j.title}} </h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+      
+      {% for i in deals_range2 %}
+    <div class="carousel-item">
+      <div class="card-group">
+        {% for j in i %}
+        <div class="card">
+          <a href="/movie/{{j.id}}">
+          <img src="{{j.img_url}}" class="card-img-top" id = "movieimage" alt="no image" onerror="this.src='/static/noposter.png';"> 
+        </a>
+          <div class="card-body">
+            <h5 class="card-title">{{j.title}}</h5>
+            <p class="card-text"><small id = "god" class = "text-muted"> {{j.runtime}}</small></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+  <div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions3" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions3" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+{% endblock body %}

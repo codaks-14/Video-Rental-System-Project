@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block body %}
+<style>
+
+    {% comment %} beautifying heading {% endcomment %}
+    h1 
+    {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        color: #f8f9fa;
+    }
+
+    {% comment %} beautifying card {% endcomment %}
+    .card-group 
+    {
+        background-color: black;
+        margin: auto;
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-bottom: 30px;
+    }
+    .card-title 
+    {
+        margin-bottom: 0;
+    }
+    .card-text 
+    {
+        margin-bottom: 0;
+    }
+    .card 
+    {
+        background-color: black;
+        padding: 15px;
+    }
+    .card-body 
+    {
+        height: auto;
+        border-radius: 10px;
+        background-color: white;
+        color: black;
+        padding: 0.8rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+    }
+    #movieimage 
+    {
+        aspect-ratio: 2/3;
+        border-collapse: separate;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .my
+    {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+</style>
+<h1>{{heading}}</h1>
+
+    {% for i in moviesets %}
+    <div class="card-group" style = "width: {% widthratio i|length 1 25 %}%; padding-left: {% widthratio i|length 3 30 %}px; padding-right: {% widthratio i|length 3 30 %}px;">
+        {% for movie in i %}
+        <div class="card">
+        <a href="/movie/{{movie.id}}">
+            <img id="movieimage" src='{{movie.img_url}}' class="card-img-top" alt="no image" onerror="this.src='static/noposter.png';">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">{{movie.title}}</h5>
+            <p class="card-text"><small class="text-muted">{{movie.release_year.year}}</small></p>
+            <p class="card-text my">{{movie.desc}}</p>
+            <p class="card-text"><small class="text-muted">{{movie.runtime}}</small></p>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock body %}

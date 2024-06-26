@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}
+{{movie.title}}
+{% endblock title %}
+{% block body %}
+
+
+<style>
+  #bg {
+    aspect-ratio: 16/9;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0.4)),
+    url("{{movie.backdrop_url}}");
+
+    background-size: cover;
+  }
+
+  .title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+  }
+  .content {
+    padding-top: 10%;
+    padding-left: 6%;
+  }
+
+  .genre {
+    font-size: 1.5rem;
+    color: whitesmoke;
+    white-space: nowrap;
+  }
+  
+  .duration {
+    font-size: 1.5rem;
+    color: whitesmoke;
+    white-space: nowrap;
+  }
+
+  .year {
+    font-size: 1.5rem;
+    color: whitesmoke;
+  }
+
+  .desc {
+    font-size: 1.25rem;
+    color: whitesmoke;
+  }
+
+  .rbuy   > * {
+    margin: 0.2rem;
+    height: 100%;
+    width: 23%;
+    /* font style */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    /* background-color: #343a40;  */
+  }
+
+  .main-cast {
+    padding-top: 35px; 
+  }
+  .nicecast {
+    font-size: 1.2rem;
+    color: whitesmoke;
+    white-space: nowrap;
+  }
+
+  {% comment %} beautifying card {% endcomment %}
+  .card-group 
+  {
+      background-color: black;
+      margin: auto;
+      padding-left: 30px;
+      padding-right: 30px;
+      margin-bottom: 30px;
+  }
+  .card-title 
+  {
+      margin-bottom: 0;
+  }
+  .card-text 
+  {
+      margin-bottom: 0;
+  }
+  .card 
+  {
+      background-color: black;
+      padding: 15px;
+  }
+  .card-body 
+  {
+      height: auto;
+      border-radius: 10px;
+      background-color: white;
+      color: black;
+      padding: 0.8rem;
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+  }
+  #movieimage 
+  {
+    aspect-ratio: 2/3;
+    border-collapse: separate;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+  .my
+  {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+</style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+
+<div id="bg">
+  <div class="content">
+    <h1 class="title">{{movie.title}}</h1>
+    <div class="row" style = "display: flex;">
+      <div class="col-1">
+        <p class="genre">{{movie.genre}}</p>
+      </div>
+      <div class="col-1 ml-2 mr-1">
+        <p class="duration"> {{hours}}hr {{minutes}}m</p>
+      </div>
+      <div class="col-1">
+        <p class = "year">{{movie.release_year.year}}</p>   
+      </div>
+      <div class="col-1">
+        <p class="badge bg-secondary px-2 py-2 mx-0 my-0" style = "text-wrap: nowrap; font-size: 1.25rem">{{movie.certification}}</p>   
+      </div>
+    </div>
+    <div class="row" style = "display: flex;">
+      <div class="col-1">
+        <p class = "year" style = "text-wrap: nowrap">Rating: {{movie.rating}}</p>   
+      </div>
+    </div>
+    <!-- adding movie desciption in good format -->
+    <div class="row">
+      <div class="col-6">
+        <p class="desc">{{movie.desc}}</p>
+      </div>
+    </div>
+    <!-- to make buttons to rent and buy movies -->
+    <div class="row">
+      <div class="col-7 rbuy">
+        <button type="text" class="btn btn-dark disabled">Rent ₹{{movie.rent_price}}</button>
+        <button type="text" class="btn btn-dark disabled">Buy ₹{{movie.buy_price}}</button>
+        <a style = "width: 10%;" type="button" class="btn btn-dark btn-lg" href="/add_to_cart/{{movie.id}}" ><i class="fas fa-cart-plus"  style="scale: 1.25;"></i></a>
+      </div>
+    </div>
+    <div class="row main-cast  py-2">
+      <div class="col-1"  style="max-width: 6.8%; padding-right: 0px">
+        <p class="nicecast heado" style="color: rgb(169, 169, 169)">Rent duration: {{movie.rent_duration}} days </p>
+      </div>
+  </div>
+    <!-- to display cast properly -->
+    <div class="row main-cast pt-2">
+        <div class="col-1"  style="max-width: 6.8%; padding-right: 0px">
+          <p class="nicecast heado" style="color: rgb(169, 169, 169)">Starring: </p>
+        </div>
+        <div class="col-1" style="padding-left: 2px">
+          <p class="nicecast">{{movie.cast}}</p>
+        </div>
+    </div>
+    <div class="row main-cast py-0">
+        <div class="col-1"  style="max-width: 6.8%; padding-right: 0px">
+          <p class="nicecast heado" style="color: rgb(169, 169, 169)">Director: </p>
+        </div>
+        <div class="col-1" style="padding-left: 2px">
+          <p class="nicecast">{{movie.director}}</p>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Similar Movies {% endcomment %}
+<h1 style="padding: 30px 0px 0px 80px; color: white; font-family: math; font-weight: bolder">Similar Movies</h1>
+{% for i in moviesets %}
+    <div class="card-group" style = "width: {% widthratio i|length 1 25 %}%; padding-left: {% widthratio i|length 3 30 %}px; padding-right: {% widthratio i|length 3 30 %}px;">
+        {% for movie in i %}
+        <div class="card">
+        <a href="/movie/{{movie.id}}">
+            <img id="movieimage" src='{{movie.img_url}}' class="card-img-top" alt="no image" onerror="this.src='/static/noposter.png';">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">{{movie.title}}</h5>
+            <p class="card-text"><small class="text-muted">{{movie.release_year.year}}</small></p>
+            <p class="card-text my">{{movie.desc}}</p>
+            <p class="card-text"><small class="text-muted">{{movie.runtime}}</small></p>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
+{% endblock body %}

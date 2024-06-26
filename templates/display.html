@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block body %}
+<style>
+
+    {% comment %} beautifying heading {% endcomment %}
+    h1 
+    {
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 20px;
+        margin-left: 24%;
+        color: #f8f9fa;
+        display: inline-block;
+    }
+
+    {% comment %} beautifying card {% endcomment %}
+    .card-group 
+    {
+        background-color: black;
+        margin: auto;
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-bottom: 30px;
+    }
+    .card-title 
+    {
+        margin-bottom: 0;
+    }
+    .card-text 
+    {
+        margin-bottom: 0;
+    }
+    .card 
+    {
+        background-color: black;
+        padding: 15px;
+    }
+    .card-body 
+    {
+        height: auto;
+        border-radius: 10px;
+        background-color: white;
+        color: black;
+        padding: 0.8rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+    }
+    #movieimage 
+    {
+        aspect-ratio: 2/3;
+        border-collapse: separate;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .my
+    {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+</style>
+<!-- Example split danger button -->
+<div class="btn-group" style="display:inline-block; padding-left:60px;">
+    <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Genre
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if genre == 'all' %}
+            <a class="dropdown-item active" href="/discover/all/{{type}}">All</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/all/{{type}}">All</a>
+            {% endif %}
+            {% if genre == 'action' %}
+            <a class = "dropdown-item active" href="/discover/action/{{type}}">Action</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/action/{{type}}">Action</a>
+            {% endif %}
+            {% if genre == 'comedy' %}
+            <a class="dropdown-item active" href="/discover/comedy/{{type}}">Comedy</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/comedy/{{type}}">Comedy</a>
+            {% endif %}
+            {% if genre == 'romance' %}
+            <a class="dropdown-item active" href="/discover/romance/{{type}}">Romance</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/romance/{{type}}">Romance</a>
+            {% endif %}
+            {% if genre == 'drama' %}
+            <a class="dropdown-item active" href="/discover/drama/{{type}}">Drama</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/drama/{{type}}">Drama</a>
+            {% endif %}
+            {% if genre == 'horror' %}
+            <a class="dropdown-item active" href="/discover/horror/{{type}}">Horror</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/horror/{{type}}">Horror</a>
+            {% endif %}
+            {% if genre == 'thriller' %}
+            <a class="dropdown-item active" href="/discover/thriller/{{type}}">Thriller</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/thriller/{{type}}">Thriller</a>
+            {% endif %}
+          </div>
+      </div>
+</div>
+
+<div class="btn-group" style="display:inline-block; padding-left:8px;">
+    <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if type == 0 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/0">Random</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/0">Random</a>
+            {% endif %}
+            {% if type == 1 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/1">A-Z</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/1">A-Z</a>
+            {% endif %}
+            {% if type == 2 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/2">Z-A</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/2">Z-A</a>
+            {% endif %}
+            {% if type == 3 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/3">Latest</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/3">Latest</a>
+            {% endif %}
+            {% if type == 4 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/4">Oldest</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/4">Oldest</a>
+            {% endif %}
+            {% if type == 5 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/5">Best Rated</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/5">Best Rated</a>
+            {% endif %}
+            {% if type == 6 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/6">Least Rated</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/6">Least Rated</a>
+            {% endif %}
+            {% if type == 7 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/7">Price (High to Low)</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/7">Price (High to Low)</a>
+            {% endif %}
+            {% if type == 8 %}
+            <a class="dropdown-item active" href="/discover/{{genre}}/8">Price (Low to High)</a>
+            {% else %}
+            <a class="dropdown-item" href="/discover/{{genre}}/8">Price (Low to High)</a>
+            {% endif %}
+          </div>
+      </div>
+</div>
+
+<h1>{{heading}}</h1>
+
+    {% for i in moviesets %}
+    <div class="card-group" style = "width: {% widthratio i|length 1 25 %}%; padding-left: {% widthratio i|length 3 30 %}px; padding-right: {% widthratio i|length 3 30 %}px;">
+        {% for movie in i %}
+        <div class="card">
+        <a href="/movie/{{movie.id}}">
+            <img id="movieimage" src='{{movie.img_url}}' class="card-img-top" alt="no image" onerror="this.src='/static/noposter.png';">
+        </a>
+        <div class="card-body">
+            <h5 class="card-title">{{movie.title}}</h5>
+            <p class="card-text"><small class="text-muted">{{movie.release_year.year}}</small></p>
+            <p class="card-text my">{{movie.desc}}</p>
+            <p class="card-text"><small class="text-muted">{{movie.runtime}}</small></p>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock body %}
